@@ -1,0 +1,70 @@
+header {
+    padding: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    margin-left: 25rem;
+    margin-right: 25rem;
+    background-color: rgba(26, 26, 26, 0.918);
+    border-color: white;
+    display: flex;
+    align-items: center;
+    color: rgb(75, 141, 255);
+    width: 107rem;
+}
+
+#nav_title {
+    margin-right: 50%;
+    margin-left: 1rem;
+    font-size: 2rem;
+}
+
+.navbar ul {
+    display: flex;
+}
+
+.navbar li {
+    list-style: none;
+    padding: 0 1rem;
+}
+
+.navbar__link {
+    text-decoration: none;
+    color: black;
+    font-size: 1.4rem;
+    color: white;
+}
+
+#best_film {
+    border-style: solid;
+    padding: 15rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    margin-left: 25rem;
+    margin-right: 25rem;
+}
+
+.category__title {
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.category__elements {
+    display: flex;
+    justify-content: center;
+}
+
+.category__elements-left_arrow, .category__elements-right_arrow {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: rgb(75, 141, 255);
+    border-radius: 50%;
+    border: rgb(75, 141, 255) solid;
+    height: 3rem;
+    margin-top: 6rem;
+}
+
+.category__elements-left_arrow img, .category__elements-right_arrow img {
+    width: 2rem;
+    height: 2rem;
+}
