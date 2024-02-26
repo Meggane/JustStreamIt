@@ -43,6 +43,27 @@ header {
     margin-right: 25rem;
 }
 
+#best_film__title_and_button {
+    margin-top: 15rem;
+}
+
+#best_film__title_and_button h2 {
+    font-size: 2rem;
+}
+
+#best_film__play_button {
+    border: none;
+    border-radius: 2rem;
+    background-color: rgb(75, 141, 255);
+    color: white;
+    padding: 0.5rem 2rem;
+}
+
+#best_film__image {
+    width: 25%;
+    height: 25%;
+}
+
 .category__title {
     text-align: center;
     padding-top: 1rem;
@@ -67,4 +88,17 @@ header {
 .category__elements-left_arrow img, .category__elements-right_arrow img {
     width: 2rem;
     height: 2rem;
+}
+
+.category__elements-films {
+    border: black solid;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+#category__elements--better_grades, #category__elements--latest_releases, #category__elements--dramatic_films, #category__elements--action_films {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
 }
