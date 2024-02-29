@@ -34,8 +34,14 @@ header {
     color: white;
 }
 
+.navbar li:hover {
+    transform: scale(1.1);
+}
+
 #best_film {
     border-style: solid;
+    display: flex;
+    justify-content: space-around;
     padding: 15rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
@@ -73,6 +79,8 @@ header {
 .category__elements {
     display: flex;
     justify-content: center;
+    width: 1000px;
+    margin-left: 750px;
 }
 
 .category__elements-left_arrow, .category__elements-right_arrow {
@@ -85,6 +93,12 @@ header {
     margin-top: 6rem;
 }
 
+.category__elements-left_arrow:hover, .category__elements-right_arrow:hover, #best_film__title_and_button button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgb(75, 141, 255);
+    cursor: pointer;
+}
+
 .category__elements-left_arrow img, .category__elements-right_arrow img {
     width: 2rem;
     height: 2rem;
@@ -94,6 +108,11 @@ header {
     border: black solid;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
+    display: flex;
+}
+
+.category__elements-films:hover {
+    transform: scale(1.2);
 }
 
 #category__elements--better_grades, #category__elements--latest_releases, #category__elements--dramatic_films, #category__elements--action_films {

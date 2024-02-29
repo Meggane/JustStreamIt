@@ -62,6 +62,50 @@ function filmRecoveryNextPage(url, categoryFilmId) {
 };
 
 /*
+    Scroll through the movies in each category.
+
+    Use the click of the left and right arrows to create the scroll.
+*/
+function scrollFilms() {
+    document.addEventListener("DOMContentLoaded", function () {
+        const betterGradesFilmCategory = document.getElementById("category__elements--better_grades");
+        const latestReleasesCategory = document.getElementById("category__elements--latest_releases");
+        const dramaticFilmsCategory = document.getElementById("category__elements--dramatic_films");
+        const actionFilmsCategory = document.getElementById("category__elements--action_films");
+        const categoryContainers = [
+            betterGradesFilmCategory,
+            latestReleasesCategory,
+            dramaticFilmsCategory,
+            actionFilmsCategory,
+        ];
+        const scrollLeft = (container) => {
+            container.scrollBy({
+                left: -200,
+                behavior: "smooth",
+            });
+        };
+        const scrollRight = (container) => {
+            container.scrollBy({
+                left: 200,
+                behavior: "smooth",
+            });
+        };
+      
+        document.querySelectorAll(".category__elements-left_arrow").forEach((button, index) => {
+            button.addEventListener("click", () => {
+                scrollLeft(categoryContainers[index]);
+            });
+        });
+      
+        document.querySelectorAll(".category__elements-right_arrow").forEach((button, index) => {
+            button.addEventListener("click", () => {
+                scrollRight(categoryContainers[index]);
+            });
+        });
+    });
+};
+
+/*
     We add the best rated movie. We create the different elements we need for the presentation: a div including 
     each element, the image of the film, a button to launch the film and the title of the film.
 */
@@ -155,3 +199,5 @@ sendRequest("http://localhost:8000/api/v1/titles/?year=&min_year=&max_year=&imdb
                                  "&title=&title_contains=&writer=&writer_contains=&year=", 
                                  "category__elements--action_films");
 });
+
+scrollFilms();
