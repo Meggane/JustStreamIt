@@ -115,9 +115,14 @@ header {
     transform: scale(1.2);
 }
 
-#category__elements--better_grades, #category__elements--latest_releases, #category__elements--dramatic_films, #category__elements--action_films {
+#category__elements--better_grades, #category__elements--french_films, #category__elements--dramatic_films, #category__elements--action_films {
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+}
+
+.image_error {
+    width: 200px;
+    height: 290px;
 }

@@ -25,40 +25,40 @@ function sendRequest(url, callback) {
     In case of error, a message is displayed.
     Otherwise, we create the html tags we need to add the movies: div and img. The div tag includes the img tag.
     These tags allow the desired display in the web page.
+    Check if a movie image is missing. If it is, a default image is displayed instead of the missing image.
 */
-function filmRecovery(error, requestResponse, categoryFilmId) {
+function filmRecovery(error, requestResponse, categoryFilmId, firstFilmIndex) {
     if (error) {
         console.error(error);
     } else {
         let categoryFilm = document.getElementById(categoryFilmId);
         let categoryFilmImg = categoryFilm.getElementsByTagName("img");
-        for (let filmNumber = 0; filmNumber < requestResponse.results.length; filmNumber++) {
+        for (let filmNumber = firstFilmIndex; filmNumber < requestResponse.results.length; filmNumber++) {
             if (categoryFilmImg.length < 7) {
-                let categoryElementsFilmsDiv = document.createElement("div");
-                let categoryElementsFilmsImg = document.createElement("img");
-                categoryElementsFilmsDiv.setAttribute("class", "category__elements-films");
-                categoryElementsFilmsImg.src = requestResponse.results[filmNumber].image_url;
-                categoryElementsFilmsDiv.appendChild(categoryElementsFilmsImg);
-                document.getElementById(categoryFilmId).append(categoryElementsFilmsDiv);
+                (function(currentFilmIndex) {
+                    let categoryElementsFilmsDiv = document.createElement("div");
+                    let categoryElementsFilmsImg = document.createElement("img");
+                    categoryElementsFilmsDiv.setAttribute("class", "category__elements-films");
+                    categoryElementsFilmsImg.onerror = function() {
+                        categoryFilmImg[currentFilmIndex].src = "images/image_not_found.jpg";
+                        categoryFilmImg[currentFilmIndex].setAttribute("class", "image_error");
+                    }
+                    categoryElementsFilmsImg.src = requestResponse.results[filmNumber].image_url;
+                    categoryElementsFilmsDiv.appendChild(categoryElementsFilmsImg);
+                    document.getElementById(categoryFilmId).append(categoryElementsFilmsDiv);
+                })(filmNumber);
             };
         };
     };
 };
 
 /*
-    Adding movies from next page.
-
-    We check if there are less than 7 movies added. If this is the case we add the necessary number to reach 7 
-    with the url of the following page.
+    Adding movies from next page if the requested number is not reached.
 */
 function filmRecoveryNextPage(url, categoryFilmId) {
-    let categoryFilmNextPage = document.getElementById(categoryFilmId);
-    let categoryFilmImgNextPage = categoryFilmNextPage.getElementsByTagName("img");
-    if (categoryFilmImgNextPage.length < 6) {
-        sendRequest(url, function (error, requestResponse) {
-        filmRecovery(error, requestResponse, categoryFilmId);
-        });
-    };
+    sendRequest(url, function (error, requestResponse) {
+        filmRecovery(error, requestResponse, categoryFilmId, 0);
+    });
 };
 
 /*
@@ -69,12 +69,12 @@ function filmRecoveryNextPage(url, categoryFilmId) {
 function scrollFilms() {
     document.addEventListener("DOMContentLoaded", function () {
         const betterGradesFilmCategory = document.getElementById("category__elements--better_grades");
-        const latestReleasesCategory = document.getElementById("category__elements--latest_releases");
+        const frenchFilmsCategory = document.getElementById("category__elements--french_films");
         const dramaticFilmsCategory = document.getElementById("category__elements--dramatic_films");
         const actionFilmsCategory = document.getElementById("category__elements--action_films");
         const categoryContainers = [
             betterGradesFilmCategory,
-            latestReleasesCategory,
+            frenchFilmsCategory,
             dramaticFilmsCategory,
             actionFilmsCategory,
         ];
@@ -135,12 +135,14 @@ sendRequest("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company
 
 /*
     We add films from the category "top rated films".
+
+    We start from the second best rated film because the first is already in the headline.
 */
 sendRequest("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company=&company_contains=&country=" +
             "&country_contains=&director=&director_contains=&genre=&genre_contains=&imdb_score=&imdb_score_max=" +
             "&imdb_score_min=&lang=&lang_contains=&max_year=&min_year=&rating=&rating_contains=&sort_by=" +
             "-imdb_score&title=&title_contains=&writer=&writer_contains=&year=", function (error, requestResponse) {
-            filmRecovery(error, requestResponse, "category__elements--better_grades");
+            filmRecovery(error, requestResponse, "category__elements--better_grades", 1);
             filmRecoveryNextPage("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company=" +
                                  "&company_contains=&country=&country_contains=&director=&director_contains=" +
                                  "&genre=&genre_contains=&imdb_score=&imdb_score_max=&imdb_score_min=&lang=" +
@@ -150,36 +152,36 @@ sendRequest("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company
 });
 
 /*
-    We are adding films from the "latest releases" category.
+    We are adding films from the "french films" category.
 */
 sendRequest("http://localhost:8000/api/v1/titles/?year=&min_year=&max_year=&imdb_score=&imdb_score_min=" +
-            "&imdb_score_max=&title=&title_contains=&genre=&genre_contains=&sort_by=-year&director=" +
-            "&director_contains=&writer=&writer_contains=&actor=&actor_contains=&country=&country_contains=" +
+            "&imdb_score_max=&title=&title_contains=&genre=&genre_contains=&sort_by=-imdb_score&director=" +
+            "&director_contains=&writer=&writer_contains=&actor=&actor_contains=&country=France&country_contains=" +
             "&lang=&lang_contains=&company=&company_contains=&rating=&rating_contains=", 
             function (error, requestResponse) {
-            filmRecovery(error, requestResponse, "category__elements--latest_releases");
+            filmRecovery(error, requestResponse, "category__elements--french_films", 0);
             filmRecoveryNextPage("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company=" +
-                                 "&company_contains=&country=&country_contains=&director=&director_contains=" +
+                                 "&company_contains=&country=France&country_contains=&director=&director_contains=" +
                                  "&genre=&genre_contains=&imdb_score=&imdb_score_max=&imdb_score_min=&lang=" +
-                                 "&lang_contains=&max_year=&min_year=&page=2&rating=&rating_contains=" +
-                                 "&sort_by=-year&title=&title_contains=&writer=&writer_contains=&year=", 
-                                 "category__elements--latest_releases");
+                                 "&lang_contains=&max_year=&min_year=&page=2&rating=&rating_contains=&sort_by=" +
+                                 "-imdb_score&title=&title_contains=&writer=&writer_contains=&year=", 
+                                 "category__elements--french_films");
 });
 
 /*
     We add films from the category "dramatic films".
 */
 sendRequest("http://localhost:8000/api/v1/titles/?year=&min_year=&max_year=&imdb_score=&imdb_score_min=" +
-            "&imdb_score_max=&title=&title_contains=&genre=drama&genre_contains=&sort_by=&director=" +
-            "&director_contains=&writer=&writer_contains=&actor=&actor_contains=&country=&country_contains=" +
-            "&lang=&lang_contains=&company=&company_contains=&rating=&rating_contains=", 
+            "&imdb_score_max=&title=&title_contains=&genre=drama&genre_contains=&sort_by=-imdb_score&director=" +
+            "&director_contains=&writer=&writer_contains=&actor=&actor_contains=&country=&country_contains=&lang=" +
+            "&lang_contains=&company=&company_contains=&rating=&rating_contains=", 
             function (error, requestResponse) {
-            filmRecovery(error, requestResponse, "category__elements--dramatic_films");
+            filmRecovery(error, requestResponse, "category__elements--dramatic_films", 0);
             filmRecoveryNextPage("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company=" +
                                  "&company_contains=&country=&country_contains=&director=&director_contains=" +
                                  "&genre=drama&genre_contains=&imdb_score=&imdb_score_max=&imdb_score_min=&lang=" +
                                  "&lang_contains=&max_year=&min_year=&page=2&rating=&rating_contains=&sort_by=" +
-                                 "&title=&title_contains=&writer=&writer_contains=&year=", 
+                                 "-imdb_score&title=&title_contains=&writer=&writer_contains=&year=", 
                                  "category__elements--dramatic_films");
 });
 
@@ -187,16 +189,16 @@ sendRequest("http://localhost:8000/api/v1/titles/?year=&min_year=&max_year=&imdb
     We add films from the category "action films".
 */
 sendRequest("http://localhost:8000/api/v1/titles/?year=&min_year=&max_year=&imdb_score=&imdb_score_min=" +
-            "&imdb_score_max=&title=&title_contains=&genre=action&genre_contains=&sort_by=&director=" +
-            "&director_contains=&writer=&writer_contains=&actor=&actor_contains=&country=&country_contains=" +
-            "&lang=&lang_contains=&company=&company_contains=&rating=&rating_contains=", 
+            "&imdb_score_max=&title=&title_contains=&genre=action&genre_contains=&sort_by=-imdb_score&director=" +
+            "&director_contains=&writer=&writer_contains=&actor=&actor_contains=&country=&country_contains=&lang=" +
+            "&lang_contains=&company=&company_contains=&rating=&rating_contains=", 
             function (error, requestResponse) {
-            filmRecovery(error, requestResponse, "category__elements--action_films");
+            filmRecovery(error, requestResponse, "category__elements--action_films", 0);
             filmRecoveryNextPage("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company=" +
                                  "&company_contains=&country=&country_contains=&director=&director_contains=" +
                                  "&genre=action&genre_contains=&imdb_score=&imdb_score_max=&imdb_score_min=&lang=" +
                                  "&lang_contains=&max_year=&min_year=&page=2&rating=&rating_contains=&sort_by=" +
-                                 "&title=&title_contains=&writer=&writer_contains=&year=", 
+                                 "-imdb_score&title=&title_contains=&writer=&writer_contains=&year=", 
                                  "category__elements--action_films");
 });
 
