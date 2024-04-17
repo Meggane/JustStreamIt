@@ -1,11 +1,15 @@
+body {
+    background-color: rgba(0, 0, 0, 0.952);
+    color: #fff;
+}
+
 header {
+    position: fixed;
     padding: 1rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
     margin-left: 25rem;
     margin-right: 25rem;
     background-color: rgba(26, 26, 26, 0.918);
-    border-color: white;
+    border-color: #fff;
     display: flex;
     align-items: center;
     color: rgb(75, 141, 255);
@@ -29,9 +33,9 @@ header {
 
 .navbar__link {
     text-decoration: none;
-    color: black;
+    color: #000;
     font-size: 1.4rem;
-    color: white;
+    color: #fff;
 }
 
 .navbar li:hover {
@@ -53,7 +57,7 @@ header {
     margin-top: 15rem;
 }
 
-#best_film__title_and_button h2 {
+#best_film__title {
     font-size: 2rem;
 }
 
@@ -61,13 +65,26 @@ header {
     border: none;
     border-radius: 2rem;
     background-color: rgb(75, 141, 255);
-    color: white;
+    color: #fff;
     padding: 0.5rem 2rem;
+}
+
+.best_film__infos_button {
+    border: rgb(75, 141, 255) 1px solid;
+    border-radius: 2rem;
+    background-color: #fff;
+    color: rgb(75, 141, 255);
+    padding: 0.5rem 1.2rem;
+    margin-left: 1rem;
 }
 
 #best_film__image {
     width: 25%;
     height: 25%;
+}
+
+#best_film__synopsis {
+    font-size: 1.1rem;
 }
 
 .category__title {
@@ -83,7 +100,7 @@ header {
     margin-left: 750px;
 }
 
-.category__elements-left_arrow, .category__elements-right_arrow {
+.category__elements--left_arrow, .category__elements--right_arrow {
     margin-left: 1rem;
     margin-right: 1rem;
     background-color: rgb(75, 141, 255);
@@ -93,26 +110,48 @@ header {
     margin-top: 6rem;
 }
 
-.category__elements-left_arrow:hover, .category__elements-right_arrow:hover, #best_film__title_and_button button:hover {
+.category__elements--left_arrow:hover, .category__elements--right_arrow:hover, #best_film__title_and_button button:hover {
     transform: scale(1.1);
     box-shadow: 0 0 15px rgb(75, 141, 255);
     cursor: pointer;
 }
 
-.category__elements-left_arrow img, .category__elements-right_arrow img {
+.category__elements--left_arrow img, .category__elements--right_arrow img {
     width: 2rem;
     height: 2rem;
 }
 
-.category__elements-films {
+.category__elements--films {
     border: black solid;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     display: flex;
 }
 
-.category__elements-films:hover {
+.category__elements--films:hover {
     transform: scale(1.2);
+}
+
+.category__elements--films__infos_button {
+    position: absolute;
+    padding: 0.5rem;
+    margin-top: 7rem;
+    margin-left: 3.5rem;
+    display: none;
+    z-index: 0;
+    background-color: #fff;
+    border-radius: 2rem;
+    border: rgb(75, 141, 255) 1px solid;
+    color: rgb(75, 141, 255);
+    box-shadow: 0 0 35px rgb(75, 141, 255);
+}
+
+.category__elements--films__infos_button:hover {
+    background-color: #000;
+}
+
+.category__elements--films img:hover + .category__elements--films__infos_button {
+    display: flex;
 }
 
 #category__elements--better_grades, #category__elements--french_films, #category__elements--dramatic_films, #category__elements--action_films {
@@ -122,7 +161,41 @@ header {
     white-space: nowrap;
 }
 
-.image_error {
+#modal__image, .image_error {
     width: 200px;
     height: 290px;
+}
+
+#modal__image, .image_error_modal {
+    margin-left: 35rem;
+}
+
+#modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: black;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 1rem;
+}
+
+#modal__closure {
+    display: flex;
+    margin-left: 77rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgb(75, 141, 255);
+    color: white;
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.modal__elements {
+    font-size: 1.2rem;
 }

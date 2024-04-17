@@ -21,38 +21,61 @@
             </nav>
         </header>
         <main>
-            <section id="best_film"></section>
+            <section id="best_film">
+                <div id="best_film__title_and_button">
+                    <h2 id="best_film__title"></h2>
+                    <button id="best_film__play_button">Play</button>
+                    <button id="best_film__infos_button" class="best_film__infos_button">+ d'infos</button>
+                    <p id="best_film__synopsis"></p>
+                </div>
+                <img id="best_film__image" src="#">
+            </section>
             <section id="categories" class="category">
                 <h2 class="category__title">Films les mieux notés</h2>
                 <div class="category__elements">
-                    <button class="category__elements-left_arrow"><img src="images/left-arrow.png"></button>
+                    <button class="category__elements--left_arrow"><img src="images/left-arrow.png"></button>
                     <div id="category__elements--better_grades"></div>
-                    <button class="category__elements-right_arrow"><img src="images/right-arrow.png"></button>
+                    <button class="category__elements--right_arrow"><img src="images/right-arrow.png"></button>
                 </div>
             </section>
             <section class="category">
                 <h2 class="category__title">Films Français</h2>
                 <div class="category__elements">
-                    <button class="category__elements-left_arrow"><img src="images/left-arrow.png"></button>
+                    <button class="category__elements--left_arrow"><img src="images/left-arrow.png"></button>
                     <div id="category__elements--french_films"></div>
-                    <button class="category__elements-right_arrow"><img src="images/right-arrow.png"></button>
+                    <button class="category__elements--right_arrow"><img src="images/right-arrow.png"></button>
                 </div>
             </section>
             <section class="category">
                 <h2 class="category__title">Films dramatiques</h2>
                 <div class="category__elements">
-                    <button class="category__elements-left_arrow"><img src="images/left-arrow.png"></button>
+                    <button class="category__elements--left_arrow"><img src="images/left-arrow.png"></button>
                     <div id="category__elements--dramatic_films"></div>
-                    <button class="category__elements-right_arrow"><img src="images/right-arrow.png"></button>
+                    <button class="category__elements--right_arrow"><img src="images/right-arrow.png"></button>
                 </div>
             </section>
             <section class="category">
                 <h2 class="category__title">Films d'action</h2>
                 <div class="category__elements">
-                    <button class="category__elements-left_arrow"><img src="images/left-arrow.png"></button>
+                    <button class="category__elements--left_arrow"><img src="images/left-arrow.png"></button>
                     <div id="category__elements--action_films"></div>
-                    <button class="category__elements-right_arrow"><img src="images/right-arrow.png"></button>
+                    <button class="category__elements--right_arrow"><img src="images/right-arrow.png"></button>
                 </div>
+            </section>
+            <section id="modal">
+                <button id=modal__closure>&times;</button>
+                <img id="modal__image" src="#">
+                <p id="modal__title" class="modal__elements"></p>
+                <p id="modal__genre" class="modal__elements"></p>
+                <p id="modal__date_published" class="modal__elements"></p>
+                <p id="modal__rated" class="modal__elements"></p>
+                <p id="modal__imdb_score" class="modal__elements"></p>
+                <p id="modal__directors" class="modal__elements"></p>
+                <p id="modal__actors" class="modal__elements"></p>
+                <p id="modal__duration" class="modal__elements"></p>
+                <p id="modal__origin_country" class="modal__elements"></p>
+                <p id="modal__box_office" class="modal__elements">Résultat au Box Office: Aucun résultat</p>
+                <p id="modal__synopsis" class="modal__elements"></p>
             </section>
         </main>
         <footer></footer>

@@ -14,7 +14,7 @@ function sendRequest(url, callback) {
                 callback("Erreur de requête: " + xhr.status, null);
             };
         };
-    }
+    };
     xhr.open("GET", url, true);
     xhr.send();
 };
@@ -38,13 +38,18 @@ function filmRecovery(error, requestResponse, categoryFilmId, firstFilmIndex) {
                 (function(currentFilmIndex) {
                     let categoryElementsFilmsDiv = document.createElement("div");
                     let categoryElementsFilmsImg = document.createElement("img");
-                    categoryElementsFilmsDiv.setAttribute("class", "category__elements-films");
+                    let filmInfosButton = document.createElement("button");
+                    categoryElementsFilmsDiv.setAttribute("class", "category__elements--films");
                     categoryElementsFilmsImg.onerror = function() {
                         categoryFilmImg[currentFilmIndex].src = "images/image_not_found.jpg";
                         categoryFilmImg[currentFilmIndex].setAttribute("class", "image_error");
-                    }
+                    };
                     categoryElementsFilmsImg.src = requestResponse.results[filmNumber].image_url;
+                    filmInfosButton.setAttribute("id", "film_infos_button" + requestResponse.results[filmNumber].id);
+                    filmInfosButton.setAttribute("class", "category__elements--films__infos_button");
+                    filmInfosButton.textContent = "+ d'infos";
                     categoryElementsFilmsDiv.appendChild(categoryElementsFilmsImg);
+                    categoryElementsFilmsDiv.appendChild(filmInfosButton);
                     document.getElementById(categoryFilmId).append(categoryElementsFilmsDiv);
                 })(filmNumber);
             };
@@ -90,14 +95,12 @@ function scrollFilms() {
                 behavior: "smooth",
             });
         };
-      
-        document.querySelectorAll(".category__elements-left_arrow").forEach((button, index) => {
+        document.querySelectorAll(".category__elements--left_arrow").forEach((button, index) => {
             button.addEventListener("click", () => {
                 scrollLeft(categoryContainers[index]);
             });
         });
-      
-        document.querySelectorAll(".category__elements-right_arrow").forEach((button, index) => {
+        document.querySelectorAll(".category__elements--right_arrow").forEach((button, index) => {
             button.addEventListener("click", () => {
                 scrollRight(categoryContainers[index]);
             });
@@ -106,8 +109,89 @@ function scrollFilms() {
 };
 
 /*
-    We add the best rated movie. We create the different elements we need for the presentation: a div including 
-    each element, the image of the film, a button to launch the film and the title of the film.
+    We check if an image is missing and we replace it in the modal.
+*/
+function modalImageError(filmImage) {
+    filmImage.onerror = function() {
+        filmImage.src = "images/image_not_found.jpg";
+        filmImage.setAttribute("class", "image_error_modal");
+    };
+};
+
+/*
+    Creation of the modal with all the information about each film.
+
+    The modal is hidden by default. It appears at the click of the "+ d'infos" button. We get the id of the 
+    selected movie to get its information.
+*/
+function modalCreation(filmClassNameWithItsId) {
+    let modal = document.getElementById("modal");
+    closeModal();
+    if (filmClassNameWithItsId !== null) {
+        let filmIdRetrieval = filmClassNameWithItsId.match(/\d+/g);
+        if (filmIdRetrieval !== null) {
+            let filmId = parseFloat(filmIdRetrieval.join(""));
+            let filmUrl = "http://localhost:8000/api/v1/titles/" + filmId;
+            sendRequest(filmUrl, function (error, requestResponse) {
+                if (error) {
+                    console.error(error);
+                } else {
+                    modal.style.display = "block";
+                    let filmImage = document.getElementById("modal__image");
+                    let filmTitle = document.getElementById("modal__title");
+                    let filmGenre = document.getElementById("modal__genre");
+                    let filmReleaseDate = document.getElementById("modal__date_published");
+                    let filmRated = document.getElementById("modal__rated");
+                    let filmImdbScore = document.getElementById("modal__imdb_score");
+                    let filmDirector = document.getElementById("modal__directors");
+                    let filmActors = document.getElementById("modal__actors");
+                    let filmDuration = document.getElementById("modal__duration");
+                    let filmOriginCountry = document.getElementById("modal__origin_country");
+                    let filmSynopsis = document.getElementById("modal__synopsis");
+                    filmImage.src = requestResponse.image_url;
+                    modalImageError(filmImage);
+                    filmTitle.textContent = "Titre: " + requestResponse.title;
+                    filmGenre.textContent = "Genre: " + requestResponse.genres.join(", ");
+                    filmReleaseDate.textContent = "Date de sortie: " + requestResponse.date_published;
+                    filmRated.textContent = "Rated: " + requestResponse.rated;
+                    filmImdbScore.textContent = "Score Imdb: " + requestResponse.imdb_score;
+                    filmDirector.textContent = "Réalisateur(s): " + requestResponse.directors.join(", ");
+                    filmActors.textContent = "Acteurs: " + requestResponse.actors.join(", ");
+                    filmDuration.textContent = "Durée: " + requestResponse.duration + " minutes";
+                    filmOriginCountry.textContent = "Pays d'origine: " + requestResponse.countries;
+                    filmSynopsis.textContent = "Résumé: " + requestResponse.long_description;
+                };
+            });
+        };
+    } else {
+        console.log("Aucun film trouvé.");
+    };
+};
+
+/*
+    Closure of the modal. The modal closes when the cross is clicked.
+*/
+function closeModal() {
+    let modal = document.getElementById("modal");
+    let modalClosure = document.getElementById("modal__closure");
+    modalClosure.addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+};
+
+/*
+    Recovery of the id of the movie clicked to create the dedicated modal.
+*/
+function clickedFilm(event) {
+    let clickedFilmId = event.target.id;
+    modalCreation(clickedFilmId);
+};
+
+/*
+    We add the best rated movie.
+
+    We get the movie information we need and add the "+ d'infos" button that allows us to get all the information 
+    about the movie. For this, we get the url of the dedicated movie.
 */
 sendRequest("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company=&company_contains=&country=" +
             "&country_contains=&director=&director_contains=&genre=&genre_contains=&imdb_score=&imdb_score_max=" +
@@ -116,20 +200,22 @@ sendRequest("http://localhost:8000/api/v1/titles/?actor=&actor_contains=&company
             if (error) {
                 console.error(error);
             } else {
-                let divBestFilm = document.createElement("div");
-                let imgDivBestFilm = document.createElement("img");
-                let buttonBestFilm = document.createElement("button");
-                let titleBestFilm = document.createElement("h2");
-                divBestFilm.setAttribute("id", "best_film__title_and_button");
-                buttonBestFilm.setAttribute("id", "best_film__play_button");
-                buttonBestFilm.textContent = "Play";
+                let imgDivBestFilm = document.getElementById("best_film__image");
+                let titleBestFilm = document.getElementById("best_film__title");
+                let infosButtonBestFilm = document.getElementById("best_film__infos_button");
+                let synopsisBestFilm = document.getElementById("best_film__synopsis");
                 titleBestFilm.textContent = requestResponse.results[0].title;
-                imgDivBestFilm.setAttribute("id", "best_film__image");
                 imgDivBestFilm.src = requestResponse.results[0].image_url;
-                divBestFilm.appendChild(titleBestFilm);
-                divBestFilm.appendChild(buttonBestFilm);
-                document.getElementById("best_film").append(divBestFilm);
-                document.getElementById("best_film").append(imgDivBestFilm);
+                infosButtonBestFilm.setAttribute("id", "film_infos_button" + requestResponse.results[0].id);
+                infosButtonBestFilm.addEventListener("click", clickedFilm);
+                urlBestFilm = "http://localhost:8000/api/v1/titles/" + requestResponse.results[0].id;
+                sendRequest(urlBestFilm, function(error, requestResponse) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        synopsisBestFilm.textContent = requestResponse.long_description;
+                    };
+                });
             };
 });
 
@@ -202,4 +288,15 @@ sendRequest("http://localhost:8000/api/v1/titles/?year=&min_year=&max_year=&imdb
                                  "category__elements--action_films");
 });
 
+/*
+    Scroll through the movie lists.
+*/
 scrollFilms();
+
+/*
+    We recover all the movies of the site to get their id when clicking.
+*/
+let allFilmsOnTheSite = document.querySelectorAll("div");
+allFilmsOnTheSite.forEach(function(film) {
+    film.addEventListener("click", clickedFilm);
+});
