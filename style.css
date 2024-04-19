@@ -413,3 +413,13 @@ header {
 .modal__elements {
     font-size: 1.1rem;
 }
+
+footer {
+    margin-top: 7rem;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
