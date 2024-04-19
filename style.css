@@ -1,3 +1,254 @@
+/* all screens outside the mobile */
+@media only screen and (min-width: 768px) {
+    header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #nav_title {
+        padding-left: 2rem;
+        font-size: 2rem;
+    }
+
+    .navbar__icon {
+        display: none;
+    }
+
+    .navbar ul {
+        padding-right: 4rem;
+    }
+
+    .navbar__link {
+        font-size: 1.4rem;
+    }
+
+    #best_film {
+        display: flex;
+        justify-content: space-around;
+        padding: 1rem;
+    }
+
+    #best_film__image {
+        width: 22rem;
+        height: 28rem;
+    }
+}
+
+/* very large to small screen */
+@media only screen and (min-width: 992px) {
+    #modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        padding: 20px;
+    }
+}
+
+/* very large and large screen */
+@media only screen and (min-width: 1920px) {
+    #modal__closure {
+        margin-left: 77rem;
+    }
+
+    #modal__image, .image_error_modal {
+        margin-left: 35rem;
+    }
+}
+
+/* large and intermediate screen */
+@media only screen and (min-width: 1200px) and (max-width: 2559px) {
+    header {
+        left: 15.5rem;
+        right: 15.5rem;
+    }
+
+    #best_film {
+        margin-left: 15rem;
+        margin-right: 15rem;
+    }
+}
+
+/* tablet and mobile */
+@media only screen and (max-width: 991px) {
+    header {
+        left: 0.5rem;
+        right: 0.5rem;
+    }
+
+    #modal {
+        position: absolute;
+        top: 70rem;
+        left: 50%;
+        padding: 20px;
+    }
+}
+
+/* very large screen */
+@media only screen and (min-width: 2560px) {
+    header {
+        left: 25.5rem;
+        right: 25.5rem;
+    }
+
+    #best_film {
+        margin-left: 25rem;
+        margin-right: 25rem;
+    }
+
+    .category__elements {
+        margin-left: 45rem;
+        margin-right: 40rem;
+    }
+}
+
+/* large screen */
+@media only screen and (min-width: 1920px) and (max-width: 2559px) {
+    .category__elements {
+        margin-left: 32rem;
+        margin-right: 32rem;
+    }
+}
+
+/* intermediate screen */
+@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+    .category__elements {
+        margin-left: 17rem;
+        margin-right: 17rem;
+    }
+
+    #modal {
+        width: 60rem;
+    }
+
+    #modal__closure {
+        margin-left: 58rem;
+    }
+
+    #modal__image, .image_error_modal {
+        margin-left: 25rem;
+    }
+}
+
+/* small screen */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    header {
+        left: 1.5rem;
+        right: 1.5rem;
+    }
+
+    #best_film {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .category__elements {
+        margin-left: 5rem;
+        margin-right: 5rem;
+    }
+
+    #modal {
+        width: 50rem;
+    }
+
+    #modal__closure {
+        margin-left: 48rem;
+    }
+
+    #modal__image, .image_error_modal {
+        margin-left: 20rem;
+    }
+}
+
+/* tablet */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .category__elements {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    #modal {
+        width: 40rem;
+    }
+
+    #modal__closure {
+        margin-left: 38rem;
+    }
+
+    #modal__image, .image_error_modal {
+        margin-left: 15rem;
+    }
+}
+
+/* landscape version tablet */
+@media only screen and (min-width: 1080px) and (max-width: 1919px) and (min-height: 801px) {
+    #modal {
+        position: absolute;
+        top: 40rem;
+    }
+}
+
+/* mobile */
+@media only screen and (max-width: 767px) {
+    #nav_title {
+        text-align: center;
+    }
+
+    .navbar__icon {
+        position: relative;
+        top: 0.4rem;
+        width: 1rem;
+    }
+
+    .navbar ul {
+        display: flex;
+        justify-content: space-around;
+        padding-left: 0;
+        height: 2rem;
+    }
+
+    .navbar li {
+        background-color: rgb(75, 141, 255);
+        border-radius: 2rem;
+    }
+
+    .navbar__link {
+        font-size: 1.1rem;
+        position: relative;
+        top: 0.3rem;
+    }
+
+    #best_film {
+        padding-left: 4rem;
+        padding-right: 3.5rem;
+    }
+
+    .category__elements {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    #modal {
+        width: 15rem;
+    }
+
+    #modal__closure {
+        margin-left: 13rem;
+    }
+
+    #modal__image, .image_error_modal {
+        margin-left: 2rem;
+        margin-top: 1rem;
+    }
+}
+
+/* landscape version mobile */
+@media only screen and (min-width: 1200px) and (max-width: 1919px) and (max-height: 800px) {
+    #modal {
+        position: absolute;
+        top: 70rem;
+    }
+}
+
 body {
     background-color: rgba(0, 0, 0, 0.952);
     color: #fff;
@@ -6,20 +257,10 @@ body {
 header {
     position: fixed;
     padding: 1rem;
-    margin-left: 25rem;
-    margin-right: 25rem;
     background-color: rgba(26, 26, 26, 0.918);
     border-color: #fff;
-    display: flex;
     align-items: center;
     color: rgb(75, 141, 255);
-    width: 107rem;
-}
-
-#nav_title {
-    margin-right: 50%;
-    margin-left: 1rem;
-    font-size: 2rem;
 }
 
 .navbar ul {
@@ -34,7 +275,6 @@ header {
 .navbar__link {
     text-decoration: none;
     color: #000;
-    font-size: 1.4rem;
     color: #fff;
 }
 
@@ -44,13 +284,8 @@ header {
 
 #best_film {
     border-style: solid;
-    display: flex;
-    justify-content: space-around;
-    padding: 15rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
-    margin-left: 25rem;
-    margin-right: 25rem;
 }
 
 #best_film__title_and_button {
@@ -78,11 +313,6 @@ header {
     margin-left: 1rem;
 }
 
-#best_film__image {
-    width: 25%;
-    height: 25%;
-}
-
 #best_film__synopsis {
     font-size: 1.1rem;
 }
@@ -96,8 +326,6 @@ header {
 .category__elements {
     display: flex;
     justify-content: center;
-    width: 1000px;
-    margin-left: 750px;
 }
 
 .category__elements--left_arrow, .category__elements--right_arrow {
@@ -122,7 +350,7 @@ header {
 }
 
 .category__elements--films {
-    border: black solid;
+    border: #000 solid;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     display: flex;
@@ -146,10 +374,6 @@ header {
     box-shadow: 0 0 35px rgb(75, 141, 255);
 }
 
-.category__elements--films__infos_button:hover {
-    background-color: #000;
-}
-
 .category__elements--films img:hover + .category__elements--films__infos_button {
     display: flex;
 }
@@ -166,36 +390,26 @@ header {
     height: 290px;
 }
 
-#modal__image, .image_error_modal {
-    margin-left: 35rem;
-}
-
 #modal {
     display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
-    padding: 20px;
     background-color: black;
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
     border-radius: 1rem;
 }
 
 #modal__closure {
     display: flex;
-    margin-left: 77rem;
     border: none;
     border-radius: 0.5rem;
     background-color: rgb(75, 141, 255);
-    color: white;
+    color: #fff;
     padding: 0.5rem;
     font-size: 1rem;
     cursor: pointer;
 }
 
 .modal__elements {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }

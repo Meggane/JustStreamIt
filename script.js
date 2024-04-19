@@ -40,8 +40,10 @@ function filmRecovery(error, requestResponse, categoryFilmId, firstFilmIndex) {
                     let categoryElementsFilmsImg = document.createElement("img");
                     let filmInfosButton = document.createElement("button");
                     categoryElementsFilmsDiv.setAttribute("class", "category__elements--films");
+                    categoryElementsFilmsImg.setAttribute("id", "category__elements--films" + requestResponse.results[filmNumber].id);
                     categoryElementsFilmsImg.onerror = function() {
                         categoryFilmImg[currentFilmIndex].src = "images/image_not_found.jpg";
+                        categoryFilmImg[currentFilmIndex].setAttribute("id", "category__elements--films" + requestResponse.results[filmNumber].id);
                         categoryFilmImg[currentFilmIndex].setAttribute("class", "image_error");
                     };
                     categoryElementsFilmsImg.src = requestResponse.results[filmNumber].image_url;
