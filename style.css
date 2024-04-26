@@ -362,9 +362,9 @@ header {
 
 .category__elements--films__infos_button {
     position: absolute;
+    top: 7rem;
+    left: 3.5rem;
     padding: 0.5rem;
-    margin-top: 7rem;
-    margin-left: 3.5rem;
     display: none;
     z-index: 0;
     background-color: #fff;
